@@ -1,0 +1,23 @@
+{
+  "name": "@checkin.no/event_registration",
+  "version": "1.0.0",
+  "description": "Javascript wrapper to initialize and configure event registration form to load on a website ⚡",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "example-form-load-start": "parcel example/simple_form_load_example.html --https",
+    "example-form-pre_fill-start": "parcel example/prefilled_form_example.html --https"
+  },
+  "author": "Checkin",
+  "license": "ISC",
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.3.14",
+    "@swc/helpers": "^0.4.12",
+    "parcel": "^2.7.0",
+    "regenerator-runtime": "^0.13.10",
+    "typescript": "^4.8.4"
+  }
+}

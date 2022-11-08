@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script  type="module" src="../build/index.js"></script>
+</head>
+<body>
+    <!--Place container div wherever you want to show the registration form-->
+    <div id="checkin_registration"></div>
+    <script>
+        const onDocumentReady = e => {
+            const checkinRegistrationForm = getEventRegistrationForm(49815);
+
+            /*
+                Load registration form into container element. If container element does not exist,
+                you can provide an HTMLElement or element id to the init function to be the container
+                of the registration form.
+            */
+            checkinRegistrationForm.initRegistrationForm();
+        }
+        document.addEventListener('DOMContentLoaded', onDocumentReady)
+    </script>
+</body>
+</html>

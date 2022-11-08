@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script  type="module" src="../build/index.js"></script>
+</head>
+<body>
+    <!--Place container div wherever you want to show the registration form-->
+    <div id="checkin_registration"></div>
+    <script>
+        const onDocumentReady = e => {
+            const checkinRegistrationForm = getEventRegistrationForm(49815);
+
+            /*  
+                Pre-filling information might be useful 
+                when you already have logged in user data
+                that you want to be populated on registration
+                form load.
+            */
+
+            //Pre-fill ticket buyer information
+            checkinRegistrationForm.setTicketBuyer({
+                name: "Test testen",
+                phone: "+47 123 45 678",
+                countryCode: "NO",
+                email: "test@example.com"
+            });
+
+            /* 
+                Adds ticket based on id
+
+                By providing second parameter sameAsTicketBuyer true you will automatically 
+                assign ticket buyer as the participant for the given ticket.
+                Caution: Will cause the registration mode to go into default 
+                         mode even if you only have reservation mode enabled.
+            */
+            const earlyBirdTicket_ticketBuyer = checkinRegistrationForm.addTicket(96492, true); 
+
+            /*
+                Connects a crm property of type identifier to a participant. 
+            */
+            //earlyBirdTicket_ticketBuyer.setIdentifier('service_id', '123456789');
+            const earlyBirdTicket = checkinRegistrationForm.addTicket(96492); 
+            /*
+                Sets ticket participant crm data
+                Caution: Will cause the registration mode to go into default 
+                         mode even if you only have reservation mode enabled.
+            */
+            earlyBirdTicket.setParticipantInfo({
+                name: "Donald Duck",
+                phone: "+1 111",
+                countryCode: "US",
+                email: "donald@duck.com",
+                address: null
+            });
+
+            //Add additional and set value based on additional type enum. 
+            earlyBirdTicket.addAdditional(385827);
+
+            /*
+                Load registration form into container element. If container element does not exist,
+                you can provide an HTMLElement or element id to the init function to be the container
+                of the registration form.
+            */
+            checkinRegistrationForm.initRegistrationForm();
+        }
+        document.addEventListener('DOMContentLoaded', onDocumentReady)
+    </script>
+</body>
+</html>
