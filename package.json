@@ -1,6 +1,6 @@
 {
   "name": "@checkin.no/event_registration",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A javascript wrapper around Checkin's event registration form script to load event registration form on your website ⚡",
   "main": "build/event-registration.js",
   "type": "module",
