@@ -4,8 +4,12 @@ declare global {
         checkinRegistrationData: IInitialEventRegistrationFormData;
 	}
     interface Window {
-        getEventRegistrationForm: (eventId: number) => IEventRegistrationForm;
+        checkin_event: CheckinEventsWindowProp;
     }
+}
+
+interface CheckinEventsWindowProp {
+    getEventRegistrationForm: (eventId: number) => IEventRegistrationForm;
 }
 
 interface IEventRegistrationForm {
@@ -176,8 +180,11 @@ class EventRegistration implements IEventRegistrationForm {
     }
 }
 
-export const getEventRegistrationForm = (eventId: number): IEventRegistrationForm => {
+const getEventRegistrationForm = (eventId: number): IEventRegistrationForm => {
     const registrationForm = new EventRegistration(eventId);
 
     return registrationForm;
 }
+
+
+export {getEventRegistrationForm}
