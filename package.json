@@ -10,6 +10,9 @@
     "example-form-load-start": "parcel example/simple_form_load_example.html --https",
     "example-form-pre_fill-start": "parcel example/prefilled_form_example.html --https"
   },
+  "repository": {
+    "url": "https://github.com/checkin/event-registration"
+  },
   "author": "Checkin",
   "license": "ISC",
   "devDependencies": {

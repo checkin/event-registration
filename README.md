@@ -35,6 +35,7 @@ npm run example-form-load-start
 
 ## Usage
 
-TODO: Add link to javascript build
-TODO: Add npm package link
+TODO: Add link to javascript build \
+Using [npm package](https://www.npmjs.com/package/@checkin.no/event_registration)
+
 
