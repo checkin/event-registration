@@ -9,7 +9,7 @@ A javascript wrapper around Checkin's event registration form script.
 
 Written with ♡ in Typescript.
 
-https://www.checkin.no/ 
+https://www.checkin.no/ \
 https://www.checkin.no/signup
 
 ## Trying the examples
@@ -20,13 +20,13 @@ After pulling repository
 npm install
 ```
 \
-To see an example of how to load registration form [here](https://github.com/checkin/event-registration/tree/master/examples/simple_form_load.html) 
+To see an example of how to load registration form [here](https://github.com/checkin/event-registration/blob/master/examples/simple_form_load_example.html) 
 ```bash
 npm run example-form-load-start
 ```
 \
 If you want to pre-populate participant and ticket buyer data, \
-you can see an example of how to do that [here](https://github.com/checkin/event-registration/tree/master/examples/prefilled_form_example.html) 
+you can see an example of how to do that [here](https://github.com/checkin/event-registration/blob/master/examples/prefilled_form_example.html) 
 
 
 ```bash
