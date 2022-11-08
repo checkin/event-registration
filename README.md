@@ -19,6 +19,9 @@ After pulling repository
 ```bash
 npm install
 ```
+```bash
+npm run build
+```
 \
 To see an example of how to load registration form [here](https://github.com/checkin/event-registration/blob/master/examples/simple_form_load_example.html) 
 ```bash

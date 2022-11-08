@@ -1,14 +1,14 @@
 {
   "name": "@checkin.no/event_registration",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A javascript wrapper around Checkin's event registration form script to load event registration form on your website ⚡",
-  "main": "index.js",
+  "main": "build/event-registration.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "example-form-load-start": "parcel example/simple_form_load_example.html --https",
-    "example-form-pre_fill-start": "parcel example/prefilled_form_example.html --https"
+    "build": "parcel build src/index.ts --no-source-maps --dist-dir build/event-registration.js",
+    "example-form-load-start": "parcel examples/simple_form_load_example.html --https",
+    "example-form-pre_fill-start": "parcel examples/prefilled_form_example.html --https"
   },
   "repository": {
     "url": "https://github.com/checkin/event-registration"
