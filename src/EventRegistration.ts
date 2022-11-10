@@ -45,6 +45,19 @@ interface IParticipantCrmData {
     address?: ITicketParticipantCrmAddress | null;
 }
 
+interface ICrmProperty {
+    key: string;
+    value: string | number | boolean;
+}
+
+interface ITicketBuyerParticipant {
+    crmProperties: ICrmProperty[];
+}
+
+interface ITicketBuyerData extends IParticipantCrmData {
+    participant?: ITicketBuyerParticipant;
+}
+
 
 interface IInitialEventRegistrationFormTicketData {
     ticketId: number;
@@ -54,7 +67,7 @@ interface IInitialEventRegistrationFormTicketData {
 
 interface IInitialEventRegistrationFormData {
     ticketBuyer: IParticipantCrmData | null;
-    tickets: IInitialEventRegistrationFormTicketData[]
+    tickets: IInitialEventRegistrationFormTicketData[] | null;
 }
 
 class EventRegistrationFormTicket implements IEventRegistrationFormTicket {
@@ -92,7 +105,7 @@ class EventRegistrationFormTicket implements IEventRegistrationFormTicket {
 class EventRegistration implements IEventRegistrationForm {
     eventId: number;
     tickets: EventRegistrationFormTicket[] = [];
-    ticketBuyer: IParticipantCrmData | null = null;
+    ticketBuyer: ITicketBuyerData | null = null;
 
     constructor(eventId: number) {
         this.eventId = eventId;
@@ -111,8 +124,12 @@ class EventRegistration implements IEventRegistrationForm {
     }
 
 
-    setTicketBuyer = (data: IParticipantCrmData) => {
+    setTicketBuyer = (data: ITicketBuyerData) => {
         this.ticketBuyer = data;
+    }
+
+    setTicketBuyerParticipantProperty = (propertyKey: string, value: string | number | boolean) => {
+        this.ticketBuyer?.participant?.crmProperties.push({key: propertyKey, value: value});
     }
 
     initRegistrationForm(containerElementOrId?: HTMLElement | string) {
@@ -175,7 +192,7 @@ class EventRegistration implements IEventRegistrationForm {
     get initialRegistrationData(): IInitialEventRegistrationFormData {
         return {
             ticketBuyer: this.ticketBuyer,
-            tickets: this.tickets.map(ticket => (ticket.predefinedData))
+            tickets: this.tickets.length > 0 ? this.tickets.map(ticket => (ticket.predefinedData)) : null
         }
     }
 }

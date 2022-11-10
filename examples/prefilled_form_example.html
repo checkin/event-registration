@@ -28,6 +28,12 @@
                 email: "test@example.com"
             });
 
+
+            /*
+                Connects a crm property to the participant that is the same as ticket buyer. 
+            */
+            //checkinRegistrationForm.setTicketBuyerParticipantProperty('service_id', '123456789');
+
             /* 
                 Adds ticket based on id
 
@@ -38,10 +44,9 @@
             */
             const earlyBirdTicket_ticketBuyer = checkinRegistrationForm.addTicket(96492, true); 
 
-            /*
-                Connects a crm property of type identifier to a participant. 
-            */
-            //earlyBirdTicket_ticketBuyer.setIdentifier('service_id', '123456789');
+
+            
+            
             const earlyBirdTicket = checkinRegistrationForm.addTicket(96492); 
             /*
                 Sets ticket participant crm data

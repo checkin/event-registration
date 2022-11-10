@@ -23,7 +23,7 @@ npm install
 npm run build
 ```
 \
-To see an example of how to load registration form [here](https://github.com/checkin/event-registration/blob/master/examples/simple_form_load_example.html) 
+See an example of how to load registration form [here](https://github.com/checkin/event-registration/blob/master/examples/simple_form_load_example.html) 
 ```bash
 npm run example-form-load-start
 ```
@@ -33,7 +33,7 @@ you can see an example of how to do that [here](https://github.com/checkin/event
 
 
 ```bash
-npm run example-form-load-start
+npm run example-form-pre_fill-start
 ```
 
 ## Usage
