@@ -152,7 +152,7 @@ class EventRegistration implements IEventRegistrationForm {
         }
 
         if(!location.protocol.includes('https')) {
-            existingRegistrationFormContainer.innerHTML = `<p><b>Cannot initialize form because connection is not secure</b></p>`;
+            existingRegistrationFormContainer.innerHTML = `<p><b>Cannot initialize form because the connection is not secure</b></p>`;
             console.error('Event registration form will not load without HTTPS connection');
         };
 

@@ -36,9 +36,21 @@ you can see an example of how to do that [here](https://github.com/checkin/event
 npm run example-form-pre_fill-start
 ```
 
-## Usage
 
-TODO: Add link to javascript build \
+## Usage
 Using [npm package](https://www.npmjs.com/package/@checkin.no/event-registration)
+```bash
+npm install @checkin.no/event-registration
+```
+Showing the registration form
+
+    import { getEventRegistrationForm } from '@checkin.no/event-registration';
+
+    //Create registration form instance
+    const eventRegistrationForm = getEventRegistrationForm(eventId);
+
+    //Will mount registration form in the div with id "checkin_registration"
+    eventRegistrationForm.initRegistrationForm();
+
 
 
