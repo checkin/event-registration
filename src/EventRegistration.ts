@@ -7,6 +7,7 @@ interface IEventRegistrationForm {
     addTicket: (ticketId: number, sameAsOrderContact?: boolean) => IEventRegistrationFormTicket;
     setOrderContact: (data: IParticipantCrmData) => void;
     initRegistrationForm: (containerElementId?: string, containerElement?: HTMLElement) => void;
+    changeEvent: (eventId: number) => void;
 }
 
 interface IEventRegistrationFormTicket {
@@ -138,6 +139,9 @@ class EventRegistration implements IEventRegistrationForm {
         this.eventId = eventId;
         document.event_id = eventId;
         this.changeEvent = this.changeEvent.bind(this);
+        this.initRegistrationForm = this.initRegistrationForm.bind(this);
+        this.duplicateScriptsCleanup = this.duplicateScriptsCleanup.bind(this);
+
         if(document.checkinRegistrationData) {
             if(document.checkinRegistrationData.ticketBuyer) {
                 this.orderContact = {...document.checkinRegistrationData.ticketBuyer};
