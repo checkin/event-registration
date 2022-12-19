@@ -137,7 +137,24 @@ class EventRegistration implements IEventRegistrationForm {
     constructor(eventId: number) {
         this.eventId = eventId;
         document.event_id = eventId;
+        this.changeEvent = this.changeEvent.bind(this);
+        if(document.checkinRegistrationData) {
+            if(document.checkinRegistrationData.ticketBuyer) {
+                this.orderContact = {...document.checkinRegistrationData.ticketBuyer};
+            }
+            if(document.checkinRegistrationData.crmPropertyValues) {
+                this.propertyValues = document.checkinRegistrationData.crmPropertyValues.map(property => {
+                    return {...property};
+                })
+            }
+        }
     };
+
+    changeEvent(eventId: number) {
+        this.eventId = eventId;
+        document.event_id = eventId;
+        this.initRegistrationForm();
+    }
 
     addTicket = (ticketId: number, sameAsOrderContact?: boolean): IEventRegistrationFormTicket => {
         const ticket = new EventRegistrationFormTicket(ticketId);
@@ -165,6 +182,24 @@ class EventRegistration implements IEventRegistrationForm {
             document.checkinRegistrationData = this.initialRegistrationData;
         }
         let existingRegistrationFormContainer = document.getElementById('checkin_registration');
+        if(this.scriptExists && existingRegistrationFormContainer) {
+            let parent = existingRegistrationFormContainer?.parentElement;
+            if(parent) {
+                const elementIndex = Array.from(parent.children).indexOf(existingRegistrationFormContainer);
+                parent?.removeChild(existingRegistrationFormContainer);
+                const newRegistrationFormContainer = document.createElement('div');
+                newRegistrationFormContainer.id = 'checkin_registration';
+        
+                if(elementIndex >= parent.children.length || parent.children.length === 0) {
+                    parent?.appendChild(newRegistrationFormContainer);
+                } else if(parent.children.length === 1 && elementIndex === 0) {
+                    parent.insertBefore(newRegistrationFormContainer, parent.children[0]);
+                } else {
+                    parent.insertBefore(newRegistrationFormContainer, parent.children[elementIndex]);
+                } 
+
+            }
+        }
         const registrationFormContainer = document.createElement('div');
         registrationFormContainer.id = "checkin_registration";
         if(containerElementOrId && !existingRegistrationFormContainer) {
@@ -183,8 +218,6 @@ class EventRegistration implements IEventRegistrationForm {
             existingRegistrationFormContainer.innerHTML = `<p><b>Cannot initialize form because the connection is not secure</b></p>`;
             console.error('Event registration form will not load without HTTPS connection');
         };
-
-        //Check if script already exists and cleanup if it does
         this.duplicateScriptsCleanup();
         var headTag = document.head;
         var script = document.createElement('script');
@@ -194,19 +227,43 @@ class EventRegistration implements IEventRegistrationForm {
         headTag.appendChild(script);
     };
 
-
-    private duplicateScriptsCleanup(): void {
+    private get scriptExists(): boolean {
         const headScripts = document.head.getElementsByTagName('script');
+        for(let i = 0; i < headScripts.length; i++) {
+            if(headScripts[i].src.includes('https://registration.checkin.no')) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private duplicateScriptsCleanup() {
+        const headScripts = document.head.getElementsByTagName('script');
+        const headLinks = document.head.getElementsByTagName('link');
+      
         const scripts = [];
+        const links = [];
         for(const script of headScripts) {
-            if(script.src === 'https://registration.checkin.no/registration.loader.js') {
+            if(script.src.includes('https://registration.checkin.no')) {
                 scripts.push(script);
-                document.head.removeChild(script);
+            }
+        }
+
+        for(const link of headLinks) {
+            if(link.href.includes('https://registration.checkin.no')) {
+                links.push(link);
             }
         }
         if(scripts.length > 1) {
             console.error("Multiple event registration scripts are being loaded. This might cause issues");
         };
+        
+        scripts.forEach(script => {
+            document.head.removeChild(script);
+        });
+        links.forEach(link => {
+            document.head.removeChild(link);
+        });
     };
 
     get hasInitialRegistrationData() {

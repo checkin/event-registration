@@ -1,6 +1,6 @@
 {
   "name": "@checkin.no/event-registration",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Load checkin event registration form on your website ⚡",
   "main": "build/event-registration.js",
   "types": "build/event-registration.d.ts",
