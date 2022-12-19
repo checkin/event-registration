@@ -21,7 +21,7 @@
             */
 
             //Pre-fill ticket buyer information
-            checkinRegistrationForm.setTicketBuyer({
+            checkinRegistrationForm.setOrderContact({
                 name: "Test testen",
                 phone: "+47 123 45 678",
                 countryCode: "NO",
@@ -30,28 +30,25 @@
 
 
             /*
-                Connects a crm property to the participant that is the same as ticket buyer. 
+                Connects a crm property to the participant that is linked to the order contact. 
+          
+                checkinRegistrationForm.setCrmProperty({
+                    propertyKey: 'crm-property-key',
+                    propertyValue: 123456,
+                    context: orderContactParticipant
+                });
             */
-            //checkinRegistrationForm.setTicketBuyerParticipantProperty('service_id', '123456789');
-
             /* 
-                Adds ticket based on id
-
-                By providing second parameter sameAsTicketBuyer true you will automatically 
-                assign ticket buyer as the participant for the given ticket.
-                Caution: Will cause the registration mode to go into default 
-                         mode even if you only have reservation mode enabled.
+                Add ticket by id. 
             */
-            const earlyBirdTicket_ticketBuyer = checkinRegistrationForm.addTicket(96492, true); 
+            const earlyBirdTicket_orderContact = checkinRegistrationForm.addTicket(96492, true); 
 
 
             
             
             const earlyBirdTicket = checkinRegistrationForm.addTicket(96492); 
             /*
-                Sets ticket participant crm data
-                Caution: Will cause the registration mode to go into default 
-                         mode even if you only have reservation mode enabled.
+                Set ticket participant crm data
             */
             earlyBirdTicket.setParticipantInfo({
                 name: "Donald Duck",
@@ -61,7 +58,7 @@
                 address: null
             });
 
-            //Add additional and set value based on additional type enum. 
+            //Add additional by id 
             earlyBirdTicket.addAdditional(385827);
 
             /*

@@ -1,21 +1,11 @@
-declare global {
-	interface Document {
-		event_id: number;
-        checkinRegistrationData: IInitialEventRegistrationFormData;
-	}
-    interface Window {
-        checkin_event: CheckinEventsWindowProp;
-    }
-}
-
 interface CheckinEventsWindowProp {
     getEventRegistrationForm: (eventId: number) => IEventRegistrationForm;
 }
 
 interface IEventRegistrationForm {
     eventId: number;
-    addTicket: (ticketId: number, sameAsTicketBuyer?: boolean) => IEventRegistrationFormTicket;
-    setTicketBuyer: (data: IParticipantCrmData) => void;
+    addTicket: (ticketId: number, sameAsOrderContact?: boolean) => IEventRegistrationFormTicket;
+    setOrderContact: (data: IParticipantCrmData) => void;
     initRegistrationForm: (containerElementId?: string, containerElement?: HTMLElement) => void;
 }
 
@@ -50,12 +40,12 @@ interface ICrmProperty {
     value: string | number | boolean;
 }
 
-interface ITicketBuyerParticipant {
+interface IOrderContactParticipant {
     crmProperties: ICrmProperty[];
 }
 
-interface ITicketBuyerData extends IParticipantCrmData {
-    participant?: ITicketBuyerParticipant;
+interface IOrderContactData extends IParticipantCrmData {
+    participant?: IOrderContactParticipant;
 }
 
 
@@ -69,6 +59,37 @@ interface IInitialEventRegistrationFormData {
     ticketBuyer: IParticipantCrmData | null;
     tickets: IInitialEventRegistrationFormTicketData[] | null;
 }
+
+type EventRegistrationEvents = 'set-crm-property';
+
+interface IEventSetCrmProperty {
+    propertyKey: string;
+    propertyValue: string | boolean | number;
+    context: 'participant' | 'orderContactParticipant';
+    participantId?: string;
+}
+export interface IEventRegistrationEvent {
+    event: EventRegistrationEvents;
+    data: IEventSetCrmProperty;
+}
+
+interface ICheckinEventRegistrationEventHandler {
+    dispatchEvent: (event: EventRegistrationEvents, data: IEventSetCrmProperty) => void
+}
+
+declare global {
+	interface Document {
+		event_id: number;
+        checkinRegistrationData: IInitialEventRegistrationFormData;
+	}
+    interface Window {
+        checkin_event: CheckinEventsWindowProp;
+        checkinRegistrationEventHandler: ICheckinEventRegistrationEventHandler;
+    }
+}
+
+
+
 
 class EventRegistrationFormTicket implements IEventRegistrationFormTicket {
     ticketId: number;
@@ -102,20 +123,22 @@ class EventRegistrationFormTicket implements IEventRegistrationFormTicket {
     } 
 }
 
+
+
 class EventRegistration implements IEventRegistrationForm {
     eventId: number;
     tickets: EventRegistrationFormTicket[] = [];
-    ticketBuyer: ITicketBuyerData | null = null;
+    orderContact: IOrderContactData | null = null;
 
     constructor(eventId: number) {
         this.eventId = eventId;
         document.event_id = eventId;
     };
 
-    addTicket = (ticketId: number, sameAsTicketBuyer?: boolean): IEventRegistrationFormTicket => {
+    addTicket = (ticketId: number, sameAsOrderContact?: boolean): IEventRegistrationFormTicket => {
         const ticket = new EventRegistrationFormTicket(ticketId);
-        if(this.ticketBuyer) {
-            ticket.setParticipantInfo(this.ticketBuyer);
+        if(this.orderContact && sameAsOrderContact) {
+            ticket.setParticipantInfo(this.orderContact);
         };
 
         this.tickets.push(ticket);
@@ -124,12 +147,18 @@ class EventRegistration implements IEventRegistrationForm {
     }
 
 
-    setTicketBuyer = (data: ITicketBuyerData) => {
-        this.ticketBuyer = data;
+    setOrderContact = (data: IOrderContactData) => {
+        this.orderContact = data;
     }
 
-    setTicketBuyerParticipantProperty = (propertyKey: string, value: string | number | boolean) => {
-        this.ticketBuyer?.participant?.crmProperties.push({key: propertyKey, value: value});
+    setCrmProperty = (data: IEventSetCrmProperty) => {
+        if(window.checkinRegistrationEventHandler) {
+            window.checkinRegistrationEventHandler.dispatchEvent('set-crm-property', {
+                context: data.context,
+                propertyKey: data.propertyKey,
+                propertyValue: data.propertyValue
+            })
+        }
     }
 
     initRegistrationForm(containerElementOrId?: HTMLElement | string) {
@@ -182,7 +211,7 @@ class EventRegistration implements IEventRegistrationForm {
     };
 
     get hasInitialRegistrationData() {
-        if(this.ticketBuyer || this.tickets.length > 0) {
+        if(this.orderContact || this.tickets.length > 0) {
             return true;
         }
         return false;
@@ -191,7 +220,7 @@ class EventRegistration implements IEventRegistrationForm {
 
     get initialRegistrationData(): IInitialEventRegistrationFormData {
         return {
-            ticketBuyer: this.ticketBuyer,
+            ticketBuyer: this.orderContact,
             tickets: this.tickets.length > 0 ? this.tickets.map(ticket => (ticket.predefinedData)) : null
         }
     }
