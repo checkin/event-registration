@@ -58,6 +58,8 @@ interface IInitialEventRegistrationFormTicketData {
 interface IInitialEventRegistrationFormData {
     ticketBuyer: IParticipantCrmData | null;
     tickets: IInitialEventRegistrationFormTicketData[] | null;
+    pendingEvents?: IEventRegistrationEvent[];
+    crmPropertyValues?: IEventSetCrmProperty[];
 }
 
 type EventRegistrationEvents = 'set-crm-property';
@@ -72,6 +74,7 @@ export interface IEventRegistrationEvent {
     event: EventRegistrationEvents;
     data: IEventSetCrmProperty;
 }
+
 
 interface ICheckinEventRegistrationEventHandler {
     dispatchEvent: (event: EventRegistrationEvents, data: IEventSetCrmProperty) => void
@@ -129,7 +132,8 @@ class EventRegistration implements IEventRegistrationForm {
     eventId: number;
     tickets: EventRegistrationFormTicket[] = [];
     orderContact: IOrderContactData | null = null;
-
+    pendingEvents: IEventRegistrationEvent[] = [];
+    propertyValues: IEventSetCrmProperty[] = [];
     constructor(eventId: number) {
         this.eventId = eventId;
         document.event_id = eventId;
@@ -152,13 +156,8 @@ class EventRegistration implements IEventRegistrationForm {
     }
 
     setCrmProperty = (data: IEventSetCrmProperty) => {
-        if(window.checkinRegistrationEventHandler) {
-            window.checkinRegistrationEventHandler.dispatchEvent('set-crm-property', {
-                context: data.context,
-                propertyKey: data.propertyKey,
-                propertyValue: data.propertyValue
-            })
-        }
+        this.propertyValues.push(data);
+        
     }
 
     initRegistrationForm(containerElementOrId?: HTMLElement | string) {
@@ -221,7 +220,9 @@ class EventRegistration implements IEventRegistrationForm {
     get initialRegistrationData(): IInitialEventRegistrationFormData {
         return {
             ticketBuyer: this.orderContact,
-            tickets: this.tickets.length > 0 ? this.tickets.map(ticket => (ticket.predefinedData)) : null
+            tickets: this.tickets.length > 0 ? this.tickets.map(ticket => (ticket.predefinedData)) : null,
+            pendingEvents: this.pendingEvents,
+            crmPropertyValues: this.propertyValues
         }
     }
 }
