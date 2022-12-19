@@ -37,7 +37,7 @@ npm run example-form-pre_fill-start
 
 
 ## Usage
-Using [npm package](https://www.npmjs.com/package/@checkin.no/event-registration)
+[npm package](https://www.npmjs.com/package/@checkin.no/event-registration)
 ```bash
 npm install @checkin.no/event-registration
 ```
@@ -55,8 +55,8 @@ Showing the registration form
 Connect crm property to participant linked to the order contact
 
     eventRegistrationForm.setCrmProperty({
-        propertKey: 'crm-property-key',
-        propertyValue: '123456',
+        propertKey: '<crm-property-key>',
+        propertyValue: '<crm-property-value>',
         context: 'orderContactParticipant'
     });
 
