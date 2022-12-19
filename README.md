@@ -3,11 +3,10 @@
 A javascript wrapper around Checkin's event registration form script.
 
 - Makes it easy to load event registration form wherever and whenever you want to
-- Pre-populate the registration form with participant and ticket buyer data
+- Pre-fill the registration form with participant and order contact data
 - More is coming soon!
 
 
-Written with ♡ in Typescript.
 
 https://www.checkin.no/ \
 https://www.checkin.no/signup
