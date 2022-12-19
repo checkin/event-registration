@@ -27,7 +27,7 @@ See an example of how to load registration form [here](https://github.com/checki
 npm run example-form-load-start
 ```
 \
-If you want to pre-populate participant and ticket buyer data, \
+If you want to pre-populate participant and order contact data, \
 you can see an example of how to do that [here](https://github.com/checkin/event-registration/blob/master/examples/prefilled_form_example.html) 
 
 
