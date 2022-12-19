@@ -46,7 +46,7 @@ Showing the registration form
     import { getEventRegistrationForm } from '@checkin.no/event-registration';
 
     //Create registration form instance
-    const eventRegistrationForm = getEventRegistrationForm(eventId);
+    const eventRegistrationForm = getEventRegistrationForm(<your-event-id>);
 
     //Will mount registration form in the div with id "checkin_registration"
     eventRegistrationForm.initRegistrationForm();
@@ -54,7 +54,6 @@ Showing the registration form
 
 Connect crm property to participant linked to the order contact
 
-    const eventRegistrationForm = getEventRegistrationForm(eventId);
     eventRegistrationForm.setCrmProperty({
         propertKey: 'crm-property-key',
         propertyValue: '123456',
