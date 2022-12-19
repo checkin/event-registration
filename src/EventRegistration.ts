@@ -261,7 +261,6 @@ class EventRegistration implements IEventRegistrationForm {
         if(scripts.length > 1) {
             console.error("Multiple event registration scripts are being loaded. This might cause issues");
         };
-        
         scripts.forEach(script => {
             document.head.removeChild(script);
         });
