@@ -1,6 +1,6 @@
 # Event registration
 
-A javascript wrapper around Checkin's event registration form script.
+A wrapper around Checkin's event registration form embed script.
 
 - Makes it easy to load event registration form wherever and whenever you want to
 - Pre-fill the registration form with participant and order contact data
@@ -60,4 +60,4 @@ Connect crm property to participant linked to the order contact
         propertyValue: '123456',
         context: 'orderContactParticipant'
     });
-    
+
