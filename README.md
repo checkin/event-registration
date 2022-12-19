@@ -52,4 +52,12 @@ Showing the registration form
     eventRegistrationForm.initRegistrationForm();
 
 
+Connect crm property to participant linked to the order contact
 
+    const eventRegistrationForm = getEventRegistrationForm(eventId);
+    eventRegistrationForm.setCrmProperty({
+        propertKey: 'crm-property-key',
+        propertyValue: '123456',
+        context: 'orderContactParticipant'
+    });
+    
