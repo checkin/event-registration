@@ -22,14 +22,4 @@ interface IParticipantCrmData {
     countryCode?: string;
     address?: ITicketParticipantCrmAddress | null;
 }
-declare global {
-    interface Document {
-        event_id: number;
-        checkinRegistrationData: IInitialEventRegistrationFormData;
-    }
-    interface Window {
-        checkin_event: CheckinEventsWindowProp;
-        checkinRegistrationEventHandler: ICheckinEventRegistrationEventHandler;
-    }
-}
 export const getEventRegistrationForm: (eventId: number) => IEventRegistrationForm;

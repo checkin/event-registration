@@ -1,8 +1,5 @@
-interface CheckinEventsWindowProp {
-    getEventRegistrationForm: (eventId: number) => IEventRegistrationForm;
-}
 
-interface IEventRegistrationForm {
+export interface IEventRegistrationForm {
     eventId: number;
     addTicket: (ticketId: number, sameAsOrderContact?: boolean) => IEventRegistrationFormTicket;
     setOrderContact: (data: IParticipantCrmData) => void;
@@ -56,16 +53,16 @@ interface IInitialEventRegistrationFormTicketData {
     crm: IParticipantCrmData | null;
 }
 
-interface IInitialEventRegistrationFormData {
+export interface IInitialEventRegistrationFormData {
     ticketBuyer: IParticipantCrmData | null;
     tickets: IInitialEventRegistrationFormTicketData[] | null;
     pendingEvents?: IEventRegistrationEvent[];
     crmPropertyValues?: IEventSetCrmProperty[];
 }
 
-type EventRegistrationEvents = 'set-crm-property';
+export type EventRegistrationEvents = 'set-crm-property';
 
-interface IEventSetCrmProperty {
+export interface IEventSetCrmProperty {
     propertyKey: string;
     propertyValue: string | boolean | number;
     context: 'participant' | 'orderContactParticipant';
@@ -75,24 +72,6 @@ export interface IEventRegistrationEvent {
     event: EventRegistrationEvents;
     data: IEventSetCrmProperty;
 }
-
-
-interface ICheckinEventRegistrationEventHandler {
-    dispatchEvent: (event: EventRegistrationEvents, data: IEventSetCrmProperty) => void
-}
-
-declare global {
-	interface Document {
-		event_id: number;
-        checkinRegistrationData: IInitialEventRegistrationFormData;
-	}
-    interface Window {
-        checkin_event: CheckinEventsWindowProp;
-        checkinRegistrationEventHandler: ICheckinEventRegistrationEventHandler;
-    }
-}
-
-
 
 
 class EventRegistrationFormTicket implements IEventRegistrationFormTicket {

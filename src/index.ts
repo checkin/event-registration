@@ -1,7 +1,7 @@
 import { getEventRegistrationForm } from "./EventRegistration";
 
 window.checkin_event = {
-    getEventRegistrationForm: getEventRegistrationForm
+	getEventRegistrationForm: getEventRegistrationForm
 }
 
 export {getEventRegistrationForm};
