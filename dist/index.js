@@ -1,9 +1,4 @@
-function $parcel$export(e, n, v, s) {
-  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
-}
-
-$parcel$export(module.exports, "getEventRegistrationForm", () => $80fa5dbb13357945$export$891d80ce2ae8fbdb);
-class $80fa5dbb13357945$var$EventRegistrationFormTicket {
+class $eb8c646f101a0803$var$EventRegistrationFormTicket {
     participantAdditionalValues = [];
     crmData = null;
     constructor(ticketId){
@@ -33,7 +28,7 @@ class $80fa5dbb13357945$var$EventRegistrationFormTicket {
         };
     }
 }
-class $80fa5dbb13357945$var$EventRegistration {
+class $eb8c646f101a0803$var$EventRegistration {
     tickets = [];
     orderContact = null;
     pendingEvents = [];
@@ -61,7 +56,7 @@ class $80fa5dbb13357945$var$EventRegistration {
         this.initRegistrationForm();
     }
     addTicket = (ticketId, sameAsOrderContact)=>{
-        const ticket = new $80fa5dbb13357945$var$EventRegistrationFormTicket(ticketId);
+        const ticket = new $eb8c646f101a0803$var$EventRegistrationFormTicket(ticketId);
         if (this.orderContact && sameAsOrderContact) ticket.setParticipantInfo(this.orderContact);
         this.tickets.push(ticket);
         return ticket;
@@ -145,14 +140,15 @@ class $80fa5dbb13357945$var$EventRegistration {
         };
     }
 }
-const $80fa5dbb13357945$export$891d80ce2ae8fbdb = (eventId)=>{
-    const registrationForm = new $80fa5dbb13357945$var$EventRegistration(eventId);
+const $eb8c646f101a0803$export$891d80ce2ae8fbdb = (eventId)=>{
+    const registrationForm = new $eb8c646f101a0803$var$EventRegistration(eventId);
     return registrationForm;
 };
 
 
 window.checkin_event = {
-    getEventRegistrationForm: (0, $80fa5dbb13357945$export$891d80ce2ae8fbdb)
+    getEventRegistrationForm: (0, $eb8c646f101a0803$export$891d80ce2ae8fbdb)
 };
 
 
+export {$eb8c646f101a0803$export$891d80ce2ae8fbdb as getEventRegistrationForm};
