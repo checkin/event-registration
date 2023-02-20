@@ -242,8 +242,8 @@ class EventRegistration implements IEventRegistrationForm {
     }
 
     private duplicateScriptsCleanup() {
-        const headScripts = document.head.getElementsByTagName('script');
-        const headLinks = document.head.getElementsByTagName('link');
+        const headScripts: any = document.head.getElementsByTagName('script');
+        const headLinks: any = document.head.getElementsByTagName('link');
       
         const scripts = [];
         const links = [];
