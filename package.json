@@ -4,7 +4,7 @@
   "description": "Load checkin event registration form on your website ⚡",
   "types": "dist/event-registration.d.ts",
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "module": "dist/index.mjs",
   "targets": {
     "module": {
       "outputFormat": "esmodule",
@@ -16,7 +16,7 @@
     }
   },
   "exports": {
-    "import": "./index.esm.js",
+    "import": "./index.mjs",
     "require": "./index.js"
   },
   "scripts": {
