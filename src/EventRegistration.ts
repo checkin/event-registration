@@ -114,6 +114,7 @@ class EventRegistration implements IEventRegistrationForm {
     orderContact: IOrderContactData | null = null;
     pendingEvents: IEventRegistrationEvent[] = [];
     propertyValues: IEventSetCrmProperty[] = [];
+    isLoading = false;
     constructor(eventId: number) {
         this.eventId = eventId;
         document.event_id = eventId;
@@ -160,7 +161,14 @@ class EventRegistration implements IEventRegistrationForm {
         
     }
 
+  
+
     initRegistrationForm(containerElementOrId?: HTMLElement | string) {
+        if(this.isLoading) {
+            return;
+        }
+        this.isLoading = true;
+        document.isCheckinRegistrationFormMounted = true;
         if(this.hasInitialRegistrationData) {
             document.checkinRegistrationData = this.initialRegistrationData;
         }
@@ -208,7 +216,26 @@ class EventRegistration implements IEventRegistrationForm {
         script.async = true;
         script.crossOrigin = 'anonymous';
         headTag.appendChild(script);
+        this.checkIfInDom();
+        this.checkForMultipleRegistrationDivs();
     };
+
+    checkIfInDom = () => {
+        setTimeout(() => {
+            if(document.getElementById("checkin_registration")) {
+                this.isLoading = false;
+            } else {
+                this.checkIfInDom();
+            }
+        }, 500)
+    };
+
+    checkForMultipleRegistrationDivs = () => {
+        const registrationDivs = document.querySelectorAll('[id=checkin_registration]');
+        if(registrationDivs.length > 1) {
+            throw Error("You cannot have multiple divs with id checkin_registration in the DOM at the same time")
+        }
+    }
 
     private get scriptExists(): boolean {
         const headScripts = document.head.getElementsByTagName('script');
