@@ -168,7 +168,6 @@ class EventRegistration implements IEventRegistrationForm {
             return;
         }
         this.isLoading = true;
-        document.isCheckinRegistrationFormMounted = true;
         if(this.hasInitialRegistrationData) {
             document.checkinRegistrationData = this.initialRegistrationData;
         }
