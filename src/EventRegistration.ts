@@ -114,7 +114,6 @@ class EventRegistration implements IEventRegistrationForm {
     orderContact: IOrderContactData | null = null;
     pendingEvents: IEventRegistrationEvent[] = [];
     propertyValues: IEventSetCrmProperty[] = [];
-    isLoading = false;
     constructor(eventId: number) {
         this.eventId = eventId;
         document.event_id = eventId;
@@ -161,7 +160,13 @@ class EventRegistration implements IEventRegistrationForm {
         
     }
 
-  
+    get isLoading() {
+        return document.checkin_registration_form_loading ?? false;
+    }
+
+    set isLoading(loading: boolean) {
+        document.checkin_registration_form_loading = loading;
+    }
 
     initRegistrationForm(containerElementOrId?: HTMLElement | string) {
         if(this.isLoading) {
@@ -221,7 +226,7 @@ class EventRegistration implements IEventRegistrationForm {
 
     checkIfInDom = () => {
         setTimeout(() => {
-            if(document.getElementById("checkin_registration")) {
+            if(document.querySelector("#checkin_registration > .registration")) {
                 this.isLoading = false;
             } else {
                 this.checkIfInDom();
