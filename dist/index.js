@@ -67,7 +67,15 @@ class $eb8c646f101a0803$var$EventRegistration {
     setCrmProperty = (data)=>{
         this.propertyValues.push(data);
     };
+    get isLoading() {
+        return document.checkin_registration_form_loading ?? false;
+    }
+    set isLoading(loading) {
+        document.checkin_registration_form_loading = loading;
+    }
     initRegistrationForm(containerElementOrId) {
+        if (this.isLoading) return;
+        this.isLoading = true;
         if (this.hasInitialRegistrationData) document.checkinRegistrationData = this.initialRegistrationData;
         let existingRegistrationFormContainer = document.getElementById("checkin_registration");
         if (this.scriptExists && existingRegistrationFormContainer) {
@@ -104,7 +112,19 @@ class $eb8c646f101a0803$var$EventRegistration {
         script.async = true;
         script.crossOrigin = "anonymous";
         headTag.appendChild(script);
+        this.checkIfInDom();
+        this.checkForMultipleRegistrationDivs();
     }
+    checkIfInDom = ()=>{
+        setTimeout(()=>{
+            if (document.querySelector("#checkin_registration > .registration")) this.isLoading = false;
+            else this.checkIfInDom();
+        }, 500);
+    };
+    checkForMultipleRegistrationDivs = ()=>{
+        const registrationDivs = document.querySelectorAll("[id=checkin_registration]");
+        if (registrationDivs.length > 1) throw Error("You cannot have multiple divs with id checkin_registration in the DOM at the same time");
+    };
     get scriptExists() {
         const headScripts = document.head.getElementsByTagName("script");
         for(let i = 0; i < headScripts.length; i++){
