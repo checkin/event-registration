@@ -74,8 +74,10 @@ class $eb8c646f101a0803$var$EventRegistration {
         document.checkin_registration_form_loading = loading;
     }
     initRegistrationForm(containerElementOrId) {
-        if (this.isLoading) return;
-        this.isLoading = true;
+        if (this.isLoading) {
+            this.checkIfInDom();
+            return;
+        }
         if (this.hasInitialRegistrationData) document.checkinRegistrationData = this.initialRegistrationData;
         let existingRegistrationFormContainer = document.getElementById("checkin_registration");
         if (this.scriptExists && existingRegistrationFormContainer) {
@@ -112,6 +114,7 @@ class $eb8c646f101a0803$var$EventRegistration {
         script.async = true;
         script.crossOrigin = "anonymous";
         headTag.appendChild(script);
+        this.isLoading = true;
         this.checkIfInDom();
         this.checkForMultipleRegistrationDivs();
     }
