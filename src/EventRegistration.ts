@@ -170,9 +170,10 @@ class EventRegistration implements IEventRegistrationForm {
 
     initRegistrationForm(containerElementOrId?: HTMLElement | string) {
         if(this.isLoading) {
+            this.checkIfInDom();    
             return;
         }
-        this.isLoading = true;
+
         if(this.hasInitialRegistrationData) {
             document.checkinRegistrationData = this.initialRegistrationData;
         }
@@ -220,6 +221,7 @@ class EventRegistration implements IEventRegistrationForm {
         script.async = true;
         script.crossOrigin = 'anonymous';
         headTag.appendChild(script);
+        this.isLoading = true;
         this.checkIfInDom();
         this.checkForMultipleRegistrationDivs();
     };
