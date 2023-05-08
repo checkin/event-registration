@@ -1,8 +1,8 @@
 # Event registration
 
-A wrapper around Checkin's event registration form embed script.
+A wrapper around Checkin's event embed registration form.
 
-- Makes it easy to load event registration form wherever and whenever you want to
+- Gain more control over where and when the registration form loads
 - Pre-fill the registration form with participant and order contact data
 - More is coming soon!
 
